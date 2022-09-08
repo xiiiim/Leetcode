@@ -1,0 +1,48 @@
+Solution 1: Stack
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        def build(l):
+            res = []
+            for i in l:
+                if i != '#':
+                    res.append(i)
+                elif res:
+                    res.pop()
+            return res
+
+        return build(s) == build(t)
+        
+Solution 2:
+class Solution:
+    def backspaceCompare(self, s: str, t: str) -> bool:
+        s1, t1 = len(s)-1, len(t)-1
+        skip1, skip2 = 0,0
+        while s1 >=0 or t1>=0:
+            while s1 >=0:
+                if s[s1] =='#':
+                    s1 -=1
+                    skip1 +=1
+                elif skip1 >0:
+                    s1 -=1
+                    skip1 -=1
+                else:
+                    break
+
+            while t1 >=0:
+                if t[t1] =='#':
+                    t1 -=1
+                    skip2 +=1
+                elif skip2 >0:
+                    t1 -=1
+                    skip2 -=1
+                else:
+                    break
+            if t1>=0 and s1>=0:
+                if s[s1] != t[t1]:
+                    return False 
+            elif t1 >=0 or s1>=0:
+                return False
+            s1-=1
+            t1-=1
+
+        return True
