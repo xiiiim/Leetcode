@@ -13,3 +13,16 @@ Input: height = [1,1]
 Output: 1
 '''
 
+
+class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        area = 0
+        i, j = 0, len(height)-1
+
+        while i <j:
+            area = max(min(height[i], height[j]) * (j -i), area)
+            if height[i] < height[j]: # Move the shorter panel
+                i +=1
+            else:
+                j-=1
+        return area
